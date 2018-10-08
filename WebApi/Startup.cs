@@ -32,7 +32,7 @@ namespace CoreStart
                 .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 
             services
-                .RegisterServices()
+                .RegisterServices(Configuration)
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

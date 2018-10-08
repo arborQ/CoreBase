@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CrossCutting.Structure.Business.Authorize;
+using Data.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,19 +14,24 @@ namespace CoreStart.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly IValidateAccountService ValidateService;
+        protected readonly IValidateAccountService ValidateService;
+        protected readonly ApplicationDbContext DbContext;
 
-        public ValuesController(IValidateAccountService validateService) {
+        public ValuesController(IValidateAccountService validateService, ApplicationDbContext dbContext)
+        {
             ValidateService = validateService;
+            DbContext = dbContext;
         }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            var users = DbContext.Users.ToList();
+
             var isAuthorized = ValidateService.IsAccoutValid("", "");
 
-            return new string[] { "value1", "value2", isAuthorized.ToString() };
+            return new string[] { "value1", "value2", isAuthorized.ToString(), users.Count.ToString() };
         }
 
         // GET api/values/5
