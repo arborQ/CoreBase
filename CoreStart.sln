@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreStart", "WebApi\CoreStart.csproj", "{2C019D0F-08C5-486D-B6ED-22CAA7682D4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{2C019D0F-08C5-486D-B6ED-22CAA7682D4A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCuting", "CrossCuting", "{22324B4A-377D-4E20-B41A-B01387444A44}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{22324B4A-377D-4E20-B41A-B01387444A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Structure", "CrossCuting\Structure\Structure.csproj", "{070E416A-29E0-435D-AB01-FA9A799211DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Structure", "CrossCutting\Structure\Structure.csproj", "{070E416A-29E0-435D-AB01-FA9A799211DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{1602D6AD-A47B-4EB9-A65F-B3DF122A4C0F}"
 EndProject
