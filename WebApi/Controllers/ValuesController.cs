@@ -2,21 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrossCuting.Structure.Business.Authorize;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreStart.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IValidateAccountService ValidateService;
+
+        public ValuesController(IValidateAccountService validateService) {
+            ValidateService = validateService;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var isAuthorized = ValidateService.IsAccoutValid("", "");
+
+            return new string[] { "value1", "value2", isAuthorized.ToString() };
         }
 
         // GET api/values/5

@@ -1,20 +1,17 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebApi {
+namespace CoreStart.WebApi {
     internal static class InitializeServices {
-        public static void RegisterServices (IServiceCollection services) {
-            // var builder = new ContainerBuilder ();
+        public static IServiceCollection RegisterServices (this IServiceCollection services) {
 
-            // var declarations = Business.Authorize.InitializeServices.Register ().ToList ();
+            var declarations = Business.Authorize.InitializeServices.Register ().ToList ();
 
-            // foreach (var declaration in declarations) {
-            //     builder.RegisterType (declaration.DeclarationType).As (declaration.InstanceType).InstancePerDependency ();
-            // }
+            foreach (var declaration in declarations) {
+                services.AddTransient (declaration.DeclarationType, declaration.InstanceType);
+            }
 
-            // builder.Populate (services);
-
-            // var container = builder.Build ();
+            return services;
         }
     }
 }
