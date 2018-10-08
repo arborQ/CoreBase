@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossCuting\Structure\Structure.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\Structure\Structure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 using Data.Entity.Models.Account;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Data.Entity
 {
@@ -9,7 +10,9 @@ namespace Data.Entity
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\\mssqllocaldb;Database=CoreStartDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CoreStartDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

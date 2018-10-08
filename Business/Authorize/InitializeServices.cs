@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using CrossCuting.Structure.Business.Authorize;
-using CrossCuting.Structure.IoC;
+using CrossCutting.Structure.Business.Authorize;
+using CrossCutting.Structure.IoC;
 
 namespace Business.Authorize {
     public static class InitializeServices {

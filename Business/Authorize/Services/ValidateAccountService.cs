@@ -1,4 +1,4 @@
-using CrossCuting.Structure.Business.Authorize;
+using CrossCutting.Structure.Business.Authorize;
 
 namespace Business.Authorize.Services
 {

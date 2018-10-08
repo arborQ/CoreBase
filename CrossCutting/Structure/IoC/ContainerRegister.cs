@@ -1,6 +1,6 @@
 using System;
 
-namespace CrossCuting.Structure.IoC {
+namespace CrossCutting.Structure.IoC {
     public class ContainerRegister {
 
         public ContainerRegister (Type instanceType, Type declarationType) {
