@@ -18,7 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Authorize\Authorize.csproj" />
-    <ProjectReference Include="..\CrossCuting\Structure\Structure.csproj" />
+    <ProjectReference Include="..\CrossCutting\Structure\Structure.csproj" />
+    <ProjectReference Include="..\Data\Entity\Entity.csproj" />
   </ItemGroup>
 
 </Project>
