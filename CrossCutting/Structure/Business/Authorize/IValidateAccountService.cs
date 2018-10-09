@@ -1,7 +1,8 @@
 using System;
+using System.Threading.Tasks;
 
 namespace CrossCutting.Structure.Business.Authorize {
     public interface IValidateAccountService {
-        bool IsAccoutValid (string userName, string password);
+        Task<bool> IsAccoutValid (string userName, string password);
     }
 }

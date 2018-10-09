@@ -25,9 +25,9 @@ namespace CoreStart.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var isAuthorized = ValidateService.IsAccoutValid("", "");
+            var isAuthorized = await ValidateService.IsAccoutValid("", "");
 
             return new string[] { isAuthorized.ToString() };
         }

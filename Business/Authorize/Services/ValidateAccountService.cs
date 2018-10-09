@@ -1,6 +1,7 @@
 using Authorize.Services;
 using CrossCutting.Structure.Business.Authorize;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Business.Authorize.Services
 {
@@ -13,9 +14,11 @@ namespace Business.Authorize.Services
             AuthorizeUnitOfWork = authorizeUnitOfWork;
         }
 
-        public bool IsAccoutValid(string userName, string password)
+        public async Task<bool> IsAccoutValid(string userName, string password)
         {
-            return !AuthorizeUnitOfWork.Users.GetRecords().Any(a => a.Id == 1);
+            var user = await AuthorizeUnitOfWork.Users.GetRecordsAsAsync(e => e.Id == 1);
+
+            return user != null;
         }
     }
 }

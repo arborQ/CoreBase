@@ -20,12 +20,6 @@ namespace Data.Entity.Repository
             return new Repository<TEntity>(DataBaseContext);
         }
 
-        protected IAsyncRepository<TEntity> CreateAsyncRepository<TEntity>()
-            where TEntity : class, IEntity
-        {
-            return new AsyncRepository<TEntity>(DataBaseContext);
-        }
-
         public void Commit()
         {
             DataBaseContext.SaveChanges();

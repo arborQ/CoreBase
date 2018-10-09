@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Data.Entity.Repository
 {
@@ -61,6 +62,45 @@ namespace Data.Entity.Repository
         public void Update(TSource item)
         {
             DataBaseContext.Entry(item).State = EntityState.Modified;
+        }
+
+        public async Task AddAsAsync(TSource item)
+        {
+            await dbSet.AddAsync(item);
+        }
+
+        public async Task<TSource> GetRecordByIdAsAsync(long id)
+        {
+            return await dbSet.SingleAsync(e => e.Id == id);
+        }
+
+        public async Task<IEnumerable<TSource>> GetRecordsAsAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+        public async Task<IEnumerable<TSource>> GetRecordsAsAsync(Expression<Func<TSource, bool>> predicate)
+        {
+            return await dbSet.Where(predicate).ToListAsync();
+        }
+
+        public Task<IEnumerable<TSource>> GetRecordsByIdsAsAsync(IEnumerable<long> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsAsync(IEnumerable<long> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsAsync(TSource item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

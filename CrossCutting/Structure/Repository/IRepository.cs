@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Structure.Repository
 {
-    public interface IRepository<TSource>
+    public interface IRepository<TSource> : IAsyncRepository<TSource>
         where TSource : class, IEntity
     {
         void Add(TSource item);

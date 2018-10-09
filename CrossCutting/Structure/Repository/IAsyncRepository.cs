@@ -8,20 +8,20 @@ namespace Structure.Repository
 {
     public interface IAsyncRepository<TSource> where TSource : class, IEntity
     {
-        Task Add(TSource item);
+        Task AddAsAsync(TSource item);
 
-        Task Update(TSource item);
+        Task UpdateAsAsync(TSource item);
 
-        Task Remove(long id);
+        Task RemoveAsAsync(long id);
 
-        Task Remove(IEnumerable<long> ids);
+        Task RemoveAsAsync(IEnumerable<long> ids);
 
-        Task<IEnumerable<TSource>> GetRecords();
+        Task<IEnumerable<TSource>> GetRecordsAsAsync();
 
-        Task<IEnumerable<TSource>> GetRecords(Expression<Func<TSource, bool>> predicate);
+        Task<IEnumerable<TSource>> GetRecordsAsAsync(Expression<Func<TSource, bool>> predicate);
 
-        Task<TSource> GetRecordById(long id);
+        Task<TSource> GetRecordByIdAsAsync(long id);
 
-        Task<IEnumerable<TSource>> GetRecordsByIds(IEnumerable<long> ids);
+        Task<IEnumerable<TSource>> GetRecordsByIdsAsAsync(IEnumerable<long> ids);
     }
 }
