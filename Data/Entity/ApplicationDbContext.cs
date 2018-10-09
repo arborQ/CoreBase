@@ -16,10 +16,5 @@ namespace Data.Entity
         {
             base.OnConfiguring(optionsBuilder);
         }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-        }
     }
 }

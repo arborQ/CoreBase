@@ -1,10 +1,11 @@
+using Structure.Repository;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entity.Models.Account
 {
     [Table("User", Schema = "Account")]
-    public class User
+    public class User : IEntity
     {
         [Key]
         public long Id { get; set; }

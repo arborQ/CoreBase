@@ -1,9 +1,12 @@
 using System;
 
-namespace CrossCutting.Structure.IoC {
-    public class ContainerRegister {
+namespace CrossCutting.Structure.IoC
+{
+    public class ContainerRegister
+    {
 
-        public ContainerRegister (Type instanceType, Type declarationType) {
+        public ContainerRegister(Type instanceType, Type declarationType)
+        {
             InstanceType = instanceType;
             DeclarationType = declarationType;
         }
@@ -12,8 +15,14 @@ namespace CrossCutting.Structure.IoC {
 
         public Type DeclarationType { get; private set; }
 
-        public static ContainerRegister Service<TInstance, TDeclaration>() {
+        public static ContainerRegister Service<TInstance, TDeclaration>()
+        {
             return new ContainerRegister(typeof(TInstance), typeof(TDeclaration));
+        }
+
+        public static ContainerRegister UnitOfWork<TInstance>()
+        {
+            return new ContainerRegister(typeof(TInstance), typeof(TInstance));
         }
     }
 }

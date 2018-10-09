@@ -29,7 +29,7 @@ namespace CoreStart.Controllers
         {
             var isAuthorized = ValidateService.IsAccoutValid("", "");
 
-            return new string[] { "value1", "value2", isAuthorized.ToString() };
+            return new string[] { isAuthorized.ToString() };
         }
 
         // GET api/values/5

@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Structure\Structure.csproj" />
-    <ProjectReference Include="..\..\Data\Entity\Entity.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
