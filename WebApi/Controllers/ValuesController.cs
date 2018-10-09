@@ -27,11 +27,9 @@ namespace CoreStart.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var users = DbContext.Users.ToList();
-
             var isAuthorized = ValidateService.IsAccoutValid("", "");
 
-            return new string[] { "value1", "value2", isAuthorized.ToString(), users.Count.ToString() };
+            return new string[] { "value1", "value2", isAuthorized.ToString() };
         }
 
         // GET api/values/5
