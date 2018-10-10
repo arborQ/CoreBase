@@ -1,6 +1,5 @@
 using Authorize.Services;
 using CrossCutting.Structure.Business.Authorize;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Authorize.Services
