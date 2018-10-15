@@ -7,16 +7,12 @@ namespace WebApi.Models
 {
     public class CurrentUser : ICurrentUser
     {
-        public const string FullNameClaimName = "FullName";
-        public const string LoginClaimName = "Login";
-        public const string IdClaimName = "Id";
-
         private CurrentUser(long id)
         {
-
+            Id = id;
         }
 
-        public long Id { get; set; }
+        public long Id { get; private set; }
 
         public string Login { get; set; }
 
@@ -24,14 +20,25 @@ namespace WebApi.Models
 
         public string[] Roles { get; set; }
 
+        public string Email { get; set; }
+
         public static ICurrentUser CreateFromClaims(IEnumerable<Claim> claims)
         {
-            var fullName = claims.Single(a => a.Type == FullNameClaimName).Value;
-            var login = claims.Single(a => a.Type == LoginClaimName).Value;
+            if (long.TryParse(claims.Single(a => a.Type == nameof(ICurrentUser.Id)).Value, out long id))
+            {
+                var fullName = claims.Single(a => a.Type == nameof(ICurrentUser.FullName)).Value;
+                var login = claims.Single(a => a.Type == nameof(ICurrentUser.Login)).Value;
+                var email = claims.Single(a => a.Type == nameof(ICurrentUser.Email)).Value;
 
-            return new CurrentUser(1) {
-                FullName = fullName, Login = login
-            };
+                return new CurrentUser(id)
+                {
+                    Email = email,
+                    FullName = fullName,
+                    Login = login
+                };
+            }
+
+            return null;
         }
     }
 }

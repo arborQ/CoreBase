@@ -8,6 +8,8 @@ namespace Structure.Repository
     public interface IRepository<TSource> : IAsyncRepository<TSource>
         where TSource : class, IEntity
     {
+        IQueryable<TSource> Items { get; }
+
         void Add(TSource item);
 
         void Update(TSource item);

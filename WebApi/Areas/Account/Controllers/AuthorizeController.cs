@@ -2,13 +2,20 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Structure.Models;
 using Structure.Services;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using WebApi.Areas.Account.Models;
 using WebApi.Models;
 
 namespace WebApi.Areas.Account
@@ -20,23 +27,21 @@ namespace WebApi.Areas.Account
     {
         private readonly IValidateAccountService AccountService;
         private readonly IUserPrincipalService UserPrincipalService;
-        public AuthorizeController(IValidateAccountService accountService, IUserPrincipalService userPrincipalService)
+        private readonly IOptions<WebConfiguration> Configuration;
+
+        public AuthorizeController(IValidateAccountService accountService, IUserPrincipalService userPrincipalService, IOptions<WebConfiguration> configuration)
         {
             AccountService = accountService;
             UserPrincipalService = userPrincipalService;
+            Configuration = configuration;
         }
 
         [HttpPost]
-        public async Task<bool> SignIn(string login, string password)
+        public async Task<string> SignIn([FromBody]LoginModel model)
         {
-            var success = await AccountService.IsAccoutValid(login, password);
+            var user = await AccountService.IsAccoutValid(model.Login, model.Password);
 
-            var claims = new List<Claim>
-                {
-                    new Claim(CurrentUser.FullNameClaimName, login ?? "????"),
-                    new Claim(CurrentUser.LoginClaimName, login ?? "????"),
-                    new Claim(ClaimTypes.Role, "Administrator"),
-                };
+            var claims = GetClaims(user).ToList();
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -51,7 +56,32 @@ namespace WebApi.Areas.Account
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
 
-            return success;
+            return GenerateJwtToken(claims);
+        }
+
+        private IEnumerable<Claim> GetClaims(ICurrentUser user)
+        {
+            yield return new Claim(nameof(ICurrentUser.Id), user.Id.ToString());
+            yield return new Claim(nameof(ICurrentUser.Email), user.Email);
+            yield return new Claim(nameof(ICurrentUser.Login), user.Login);
+            yield return new Claim(nameof(ICurrentUser.FullName), user.FullName);
+        }
+
+        private string GenerateJwtToken(IReadOnlyCollection<Claim> claims)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.Value.Jwt.Key));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(1);
+
+            var token = new JwtSecurityToken(
+                Configuration.Value.Jwt.ValidIssuer,
+                Configuration.Value.Jwt.ValidIssuer,
+                claims,
+                expires: expires,
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [HttpDelete]

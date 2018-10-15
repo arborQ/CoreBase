@@ -14,6 +14,8 @@ namespace Data.Entity.Repository
         protected DbContext DataBaseContext;
         private DbSet<TSource> dbSet;
 
+        public IQueryable<TSource> Items => dbSet;
+
         public Repository(DbContext dataBaseContext)
         {
             DataBaseContext = dataBaseContext;
@@ -101,6 +103,11 @@ namespace Data.Entity.Repository
         public Task UpdateAsAsync(TSource item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<TSource> GetRecordAsAsync(Expression<Func<TSource, bool>> predicate)
+        {
+            return await dbSet.SingleAsync(predicate);
         }
     }
 }
