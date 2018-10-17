@@ -3,6 +3,8 @@ using Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Structure.Services;
+using WebApi.Services;
 
 namespace CoreStart.WebApi
 {
@@ -11,6 +13,8 @@ namespace CoreStart.WebApi
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             var declarations = Business.Authorize.InitializeServices.Register().ToList();
+
+            services.AddSingleton<ICryptography, CryptographyService>();
 
             foreach (var declaration in declarations)
             {
