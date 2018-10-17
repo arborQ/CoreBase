@@ -1,10 +1,9 @@
 using Authorize.Services;
 using CrossCutting.Structure.Business.Authorize;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
 using Structure.Models;
+using Structure.Services;
 using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Business.Authorize.Services
@@ -12,11 +11,13 @@ namespace Business.Authorize.Services
     internal class ValidateAccountService : IValidateAccountService
     {
         private readonly AuthorizeUnitOfWork AuthorizeUnitOfWork;
+        private readonly ICryptography Cryptography;
         private const string DefaultPassword = "Haslo123!";
 
-        public ValidateAccountService(AuthorizeUnitOfWork authorizeUnitOfWork)
+        public ValidateAccountService(AuthorizeUnitOfWork authorizeUnitOfWork, ICryptography cryptography)
         {
             AuthorizeUnitOfWork = authorizeUnitOfWork;
+            Cryptography = cryptography;
         }
 
         public async Task<ICurrentUser> IsAccoutValid(string login, string password)
@@ -30,8 +31,8 @@ namespace Business.Authorize.Services
 
             if (string.IsNullOrEmpty(user.PasswordHash) && password == DefaultPassword)
             {
-                var passwordSalt = GenerateSalt();
-                var passwordHash = HashPassword(DefaultPassword, passwordSalt);
+                var passwordSalt = Cryptography.GenerateSalt();
+                var passwordHash = Cryptography.HashPassword(DefaultPassword, passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -40,7 +41,7 @@ namespace Business.Authorize.Services
             }
             else
             {
-                var hashedPassword = HashPassword(password, user.PasswordSalt);
+                var hashedPassword = Cryptography.HashPassword(password, user.PasswordSalt);
 
                 if (hashedPassword != user.PasswordHash)
                 {
@@ -49,31 +50,6 @@ namespace Business.Authorize.Services
             }
 
             return user as ICurrentUser;
-        }
-
-        private byte[] GenerateSalt()
-        {
-            byte[] salt = new byte[128 / 8];
-
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            return salt;
-        }
-
-        private string HashPassword(string password, byte[] salt)
-        {
-            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8)
-            );
-
-            return hashed;
         }
     }
 }
