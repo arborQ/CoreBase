@@ -2,6 +2,9 @@
 
 namespace WebApi.Areas.Account.Controllers
 {
+    [Route("api/[area]/[controller]")]
+    [Area("Account")]
+    [ApiController]
     public class UsersController : ControllerBase
     {
         [HttpGet]
