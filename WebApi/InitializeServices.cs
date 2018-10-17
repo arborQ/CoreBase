@@ -12,7 +12,9 @@ namespace CoreStart.WebApi
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var declarations = Business.Authorize.InitializeServices.Register().ToList();
+            var declarations = Business.Authorize.InitializeServices.Register()
+                .Concat(Business.Account.InitializeServices.Register())
+                .ToList();
 
             services.AddSingleton<ICryptography, CryptographyService>();
 

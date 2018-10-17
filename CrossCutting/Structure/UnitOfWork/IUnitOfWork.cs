@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Structure.Repository;
+using System;
 using System.Threading.Tasks;
 
 namespace Structure.UnitOfWork
@@ -8,5 +9,7 @@ namespace Structure.UnitOfWork
         void Commit();
 
         Task CommitAsync();
+
+        IRepository<TEntity> CreateRepository<TEntity>() where TEntity : class, IEntity, new();
     }
 }

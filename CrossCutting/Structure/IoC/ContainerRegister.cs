@@ -1,3 +1,4 @@
+using Structure.UnitOfWork;
 using System;
 
 namespace CrossCutting.Structure.IoC
@@ -20,7 +21,7 @@ namespace CrossCutting.Structure.IoC
             return new ContainerRegister(typeof(TInstance), typeof(TDeclaration));
         }
 
-        public static ContainerRegister UnitOfWork<TInstance>()
+        public static ContainerRegister UnitOfWork<TInstance>() where TInstance: IUnitOfWork
         {
             return new ContainerRegister(typeof(TInstance), typeof(TInstance));
         }

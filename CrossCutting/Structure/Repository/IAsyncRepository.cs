@@ -25,5 +25,8 @@ namespace Structure.Repository
         Task<TSource> GetRecordByIdAsAsync(long id);
 
         Task<IEnumerable<TSource>> GetRecordsByIdsAsAsync(IEnumerable<long> ids);
+
+        Task<long> CountAsAsync(Expression<Func<TSource, bool>> predicate);
+
     }
 }

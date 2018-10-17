@@ -25,5 +25,7 @@ namespace Structure.Repository
         TSource GetRecordById(long id);
 
         IQueryable<TSource> GetRecordsByIds(IEnumerable<long> ids);
+
+        long Count(Expression<Func<TSource, bool>> predicate);
     }
 }

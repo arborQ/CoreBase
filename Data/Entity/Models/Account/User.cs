@@ -1,3 +1,4 @@
+using Structure.Business.Account.Models;
 using Structure.Models;
 using Structure.Repository;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Entity.Models.Account
 {
     [Table("User", Schema = "Account")]
-    public class User : IEntity, ICurrentUser
+    public class User : IEntity, ICurrentUser, IUser
     {
         [Key]
         public long Id { get; set; }

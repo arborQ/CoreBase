@@ -34,12 +34,12 @@ namespace Data.Entity.Repository
 
         public IQueryable<TSource> GetRecords()
         {
-            return dbSet.AsQueryable();
+            return dbSet.AsNoTracking().AsQueryable();
         }
 
         public IQueryable<TSource> GetRecords(Expression<Func<TSource, bool>> predicate)
         {
-            return dbSet.Where(predicate);
+            return dbSet.AsNoTracking().Where(predicate);
         }
 
         public IQueryable<TSource> GetRecordsByIds(IEnumerable<long> ids)
@@ -108,6 +108,16 @@ namespace Data.Entity.Repository
         public async Task<TSource> GetRecordAsAsync(Expression<Func<TSource, bool>> predicate)
         {
             return await dbSet.SingleAsync(predicate);
+        }
+
+        public long Count(Expression<Func<TSource, bool>> predicate)
+        {
+            return dbSet.Count(predicate);
+        }
+
+        public async Task<long> CountAsAsync(Expression<Func<TSource, bool>> predicate)
+        {
+            return await dbSet.CountAsync(predicate);
         }
     }
 }

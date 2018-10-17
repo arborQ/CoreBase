@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Structure.Business.Account.Models;
+using Structure.Business.Account.Services;
+using System.Linq;
 
 namespace WebApi.Areas.Account.Controllers
 {
@@ -7,15 +10,19 @@ namespace WebApi.Areas.Account.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public string[] Values()
+        private IUsersCoreService UsersCoreService;
+
+        public UsersController(IUsersCoreService usersCoreService)
         {
-            return new string[] {
-                "1",
-                "2",
-                "3",
-                "test",
-            };
+            UsersCoreService = usersCoreService;
+        }
+
+        [HttpGet]
+        public IUser[] Values()
+        {
+            var users = UsersCoreService.GetElements().ToArray();
+
+            return users;
         }
     }
 }

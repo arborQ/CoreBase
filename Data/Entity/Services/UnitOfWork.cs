@@ -14,8 +14,8 @@ namespace Data.Entity.Repository
             DataBaseContext = dataBaseContext;
         }
 
-        protected IRepository<TEntity> CreateRepository<TEntity>()
-            where TEntity : class, IEntity
+        public IRepository<TEntity> CreateRepository<TEntity>()
+            where TEntity : class, IEntity, new()
         {
             return new Repository<TEntity>(DataBaseContext);
         }
