@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Structure.Services
 {
@@ -61,6 +62,22 @@ namespace Structure.Services
             UnitOfWork.Commit();
 
             return MapFromEntity(entity);
+        }
+
+        public async Task RemoveAsync(IReadOnlyCollection<long> ids)
+        {
+            var repository = UnitOfWork.CreateRepository<TEntity>();
+
+            repository.Remove(ids);
+
+            await UnitOfWork.CommitAsync();
+        }
+
+        public void Remove(IReadOnlyCollection<long> ids)
+        {
+            var repository = UnitOfWork.CreateRepository<TEntity>();
+
+            repository.Remove(ids);
         }
 
         protected virtual Func<TEntity, TEntity> MapFromInterface(TInterface contract)

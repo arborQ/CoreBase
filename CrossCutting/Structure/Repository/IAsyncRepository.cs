@@ -12,10 +12,6 @@ namespace Structure.Repository
 
         Task UpdateAsAsync(TSource item);
 
-        Task RemoveAsAsync(long id);
-
-        Task RemoveAsAsync(IEnumerable<long> ids);
-
         Task<IEnumerable<TSource>> GetRecordsAsAsync();
 
         Task<IEnumerable<TSource>> GetRecordsAsAsync(Expression<Func<TSource, bool>> predicate);

@@ -32,6 +32,19 @@ namespace Account.Services
             };
         }
 
+        protected override Func<User, User> MapFromInterface(IUser contract)
+        {
+            return user => {
+                user.Login = contract.Login;
+                user.FirstName = contract.FirstName;
+                user.LastName = contract.FirstName;
+                user.Email = contract.FirstName;
+                user.IsActive = true;
+
+                return user;
+            };
+        }
+
         protected override Expression<Func<User, bool>> FilterExpression()
         {
             return a => a.IsActive;

@@ -90,16 +90,6 @@ namespace Data.Entity.Repository
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsAsync(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveAsAsync(IEnumerable<long> ids)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task UpdateAsAsync(TSource item)
         {
             throw new NotImplementedException();
