@@ -8,6 +8,10 @@
 
         string FullName { get; }
 
+        string FirstName { get; }
+
+        string LastName { get; }
+
         string Email { get; }
     }
 }
