@@ -1,5 +1,6 @@
 using System.Linq;
 using Data.Entity;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace CoreStart.WebApi
                 .ToList();
 
             services.AddSingleton<ICryptography, CryptographyService>();
+            services.AddMediatR();
 
             foreach (var declaration in declarations)
             {

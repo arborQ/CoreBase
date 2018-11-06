@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Structure\Structure.csproj" />
     <ProjectReference Include="..\..\Data\Entity\Entity.csproj" />
   </ItemGroup>

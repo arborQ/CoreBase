@@ -1,14 +1,17 @@
 using Authorize.Services;
 using CrossCutting.Structure.Business.Authorize;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Structure.Areas.Account.Models;
 using Structure.Models;
 using Structure.Services;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Business.Authorize.Services
 {
-    internal class ValidateAccountService : IValidateAccountService
+    internal class ValidateAccountService : IValidateAccountService, IRequestHandler<ILoginModel, ICurrentUser>
     {
         private readonly AuthorizeUnitOfWork AuthorizeUnitOfWork;
         private readonly ICryptography Cryptography;
@@ -50,6 +53,11 @@ namespace Business.Authorize.Services
             }
 
             return user as ICurrentUser;
+        }
+
+        public async Task<ICurrentUser> Handle(ILoginModel request, CancellationToken cancellationToken)
+        {
+            return await IsAccoutValid(request.Login, request.Password);
         }
     }
 }
