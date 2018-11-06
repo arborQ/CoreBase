@@ -9,11 +9,11 @@ using WebApi.Areas.Account.Models;
 
 namespace WebApi.Services
 {
-    public class AuthorizeHandler : IRequestHandler<LoginModel, ICurrentUser>
-    {
-        public Task<ICurrentUser> Handle(LoginModel request, CancellationToken cancellationToken)
-        {
-            return null;
-        }
-    }
+    // public class AuthorizeHandler : IRequestHandler<LoginModel, ICurrentUser>
+    // {
+    //     public Task<ICurrentUser> Handle(LoginModel request, CancellationToken cancellationToken)
+    //     {
+    //         return null;
+    //     }
+    // }
 }

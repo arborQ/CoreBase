@@ -11,6 +11,19 @@ using System.Threading.Tasks;
 
 namespace Business.Authorize.Services
 {
+    public class UserValidateHandler<TRequest> : IRequestHandler<TRequest, ICurrentUser>
+    where TRequest : ILoginModel
+    {
+        private IValidateAccountService ValidateAccountService;
+        public UserValidateHandler(IValidateAccountService validateAccountService) {
+            ValidateAccountService = validateAccountService;
+        }
+        public async Task<ICurrentUser> Handle(TRequest request, CancellationToken cancellationToken)
+        {
+            return await ValidateAccountService.IsAccoutValid(request.Login, request.Password);
+        }
+    }
+
     internal class ValidateAccountService : IValidateAccountService, IRequestHandler<ILoginModel, ICurrentUser>
     {
         private readonly AuthorizeUnitOfWork AuthorizeUnitOfWork;

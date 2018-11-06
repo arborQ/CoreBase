@@ -19,7 +19,7 @@ namespace CoreStart.WebApi
                 .ToList();
 
             services.AddSingleton<ICryptography, CryptographyService>();
-            services.AddMediatR(typeof(Business.Authorize.InitializeServices).GetTypeInfo().Assembly, typeof(InitializeServices).GetTypeInfo().Assembly);
+            services.AddMediatR();
 
             foreach (var declaration in declarations)
             {
