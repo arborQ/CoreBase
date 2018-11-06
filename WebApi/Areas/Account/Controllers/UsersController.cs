@@ -28,6 +28,14 @@ namespace WebApi.Areas.Account.Controllers
             return users;
         }
 
+        [HttpGet("{id}")]
+        public IUser Value(long id)
+        {
+            var user = UsersCoreService.GetElement(id);
+
+            return user;
+        }
+
         [HttpPost]
         public IUser AddUser([FromBody]UserViewModel model)
         {
