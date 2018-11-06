@@ -7,6 +7,8 @@ namespace Structure.Services
     {
         IReadOnlyCollection<TDto> GetElements();
 
+        TDto GetElement(long id);
+
         TDto AddElement(TDto contract);
 
         Task RemoveAsync(IReadOnlyCollection<long> ids);

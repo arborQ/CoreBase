@@ -30,6 +30,14 @@ namespace Structure.Services
             return UnitOfWork.CreateRepository<TEntity>().Count(filterExpression);
         }
 
+
+        public TInterface GetElement(long id)
+        {
+            var record = UnitOfWork.CreateRepository<TEntity>().GetRecordById(id);
+
+            return MapFromEntity(record);
+        }
+
         public IReadOnlyCollection<TInterface> GetElements()
         {
             var filterExpression = FilterExpression();
