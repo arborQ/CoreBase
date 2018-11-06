@@ -1,4 +1,5 @@
 ﻿using CrossCutting.Structure.Business.Authorize;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -28,18 +29,22 @@ namespace WebApi.Areas.Account
         private readonly IValidateAccountService AccountService;
         private readonly IUserPrincipalService UserPrincipalService;
         private readonly IOptions<WebConfiguration> Configuration;
+        private readonly IMediator Mediator;
 
-        public AuthorizeController(IValidateAccountService accountService, IUserPrincipalService userPrincipalService, IOptions<WebConfiguration> configuration)
+        public AuthorizeController(IValidateAccountService accountService, IUserPrincipalService userPrincipalService, IOptions<WebConfiguration> configuration, IMediator mediator)
         {
             AccountService = accountService;
             UserPrincipalService = userPrincipalService;
             Configuration = configuration;
+            Mediator = mediator;
         }
 
         [HttpPost]
         public async Task<string> SignIn([FromBody]LoginModel model)
         {
-            var user = await AccountService.IsAccoutValid(model.Login, model.Password);
+            var user = await Mediator.Send(model);
+
+            //var user = await AccountService.IsAccoutValid(model.Login, model.Password);
 
             var claims = GetClaims(user).ToList();
 
