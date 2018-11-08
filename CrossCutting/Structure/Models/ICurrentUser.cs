@@ -1,6 +1,8 @@
-﻿namespace Structure.Models
+﻿using MediatR;
+
+namespace Structure.Models
 {
-    public interface ICurrentUser
+    public interface ICurrentUser : IRequest<string>
     {
         long Id { get; }
 
