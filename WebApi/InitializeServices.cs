@@ -1,5 +1,6 @@
 using System.Linq;
 using Data.Entity;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,8 @@ namespace CoreStart.WebApi
                 services.AddTransient(declaration.DeclarationType, declaration.InstanceType);
             }
 
+            services.AddMediatR();
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 string conString =
