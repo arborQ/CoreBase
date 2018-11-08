@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Structure.Business.Account.Models;
-using Structure.Business.Account.Services;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Areas.Account.Models;
@@ -13,48 +14,56 @@ namespace WebApi.Areas.Account.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUsersCoreService UsersCoreService;
+        private readonly IMediator _mediator;
 
-        public UsersController(IUsersCoreService usersCoreService)
+        public UsersController(IMediator mediator)
         {
-            UsersCoreService = usersCoreService;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IUser[] Values()
+        public async Task<IUser[]> Values()
         {
-            var users = UsersCoreService.GetElements().ToArray();
+            var users = await _mediator.Send(new QueryUsersFilterModel());
 
-            return users;
+            return users.ToArray();
         }
 
         [HttpGet("{id}")]
-        public IUser Value(long id)
+        public async Task<IUser> Value(long id)
         {
-            var user = UsersCoreService.GetElement(id);
+            var user = await _mediator.Send(GetRecordModel.ById(id));
 
             return user;
         }
 
         [HttpPost]
-        public IUser AddUser([FromBody]UserViewModel model)
+        public async Task<IUser> EditUser([FromBody]UserViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var newUser = UsersCoreService.AddElement(model);
+            var user = await _mediator.Send(model);
 
-                return newUser;
-            }
-
-            throw new System.Exception("Inalid model");
+            return user;
         }
 
-        [HttpDelete]
-        public async Task<long[]> Remove([FromBody]MultipleIdsModel model)
-        {
-            await UsersCoreService.RemoveAsync(model.Ids);
+        //[HttpPost]
+        //public IUser AddUser([FromBody]UserViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var newUser = UsersCoreService.AddElement(model);
 
-            return model.Ids;
-        }
+        //        return newUser;
+        //    }
+
+        //    throw new System.Exception("Inalid model");
+        //}
+
+        //[HttpDelete]
+        //public async Task<long[]> Remove([FromBody]MultipleIdsModel model)
+        //{
+        //    await UsersCoreService.RemoveAsync(model.Ids);
+
+        //    return model.Ids;
+        //}
     }
 }

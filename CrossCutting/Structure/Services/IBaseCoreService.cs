@@ -11,6 +11,8 @@ namespace Structure.Services
 
         TDto AddElement(TDto contract);
 
+        TDto EditElement(long id, TDto contract);
+
         Task RemoveAsync(IReadOnlyCollection<long> ids);
 
         void Remove(IReadOnlyCollection<long> ids);

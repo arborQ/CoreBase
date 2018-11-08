@@ -33,8 +33,8 @@ namespace Account.Services
             return user => {
                 user.Login = contract.Login;
                 user.FirstName = contract.FirstName;
-                user.LastName = contract.FirstName;
-                user.Email = contract.FirstName;
+                user.LastName = contract.LastName;
+                user.Email = contract.Email;
                 user.IsActive = true;
 
                 return user;

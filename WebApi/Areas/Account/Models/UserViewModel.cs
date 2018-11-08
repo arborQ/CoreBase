@@ -1,8 +1,9 @@
-﻿using Structure.Business.Account.Models;
+﻿using MediatR;
+using Structure.Business.Account.Models;
 
 namespace WebApi.Areas.Account.Models
 {
-    public class UserViewModel : IUser
+    public class UserViewModel : IUser, IRequest<IUser>
     {
         public long Id { get; set; }
 
