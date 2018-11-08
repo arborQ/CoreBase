@@ -24,7 +24,8 @@ namespace Account.Services
                 FullName = entity.FullName,
                 Login = entity.Login,
                 FirstName = entity.FirstName,
-                LastName = entity.LastName
+                LastName = entity.LastName,
+                IsActive = entity.IsActive,
             };
         }
 
@@ -35,15 +36,10 @@ namespace Account.Services
                 user.FirstName = contract.FirstName;
                 user.LastName = contract.LastName;
                 user.Email = contract.Email;
-                user.IsActive = true;
+                user.IsActive = contract.IsActive;
 
                 return user;
             };
-        }
-
-        protected override Expression<Func<User, bool>> FilterExpression()
-        {
-            return a => a.IsActive;
         }
     }
 }

@@ -13,5 +13,7 @@
         string LastName { get; }
 
         string Email { get; }
+
+        bool IsActive { get; }
     }
 }
