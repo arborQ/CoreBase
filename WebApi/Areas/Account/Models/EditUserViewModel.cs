@@ -3,8 +3,7 @@ using Structure.Business.Account.Models;
 
 namespace WebApi.Areas.Account.Models
 {
-    public class UserViewModel : BaseUserModel, IUser, IRequest<IUser>
+    public class EditUserViewModel : BaseUserModel, IUser, IRequest<IUser>
     {
-
     }
 }

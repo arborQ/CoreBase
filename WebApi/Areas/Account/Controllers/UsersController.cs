@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Structure.Business.Account.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Areas.Account.Models;
@@ -37,33 +36,20 @@ namespace WebApi.Areas.Account.Controllers
             return user;
         }
 
-        [HttpPost]
-        public async Task<IUser> EditUser([FromBody]UserViewModel model)
+        [HttpPut]
+        public async Task<IUser> EditUser([FromBody]EditUserViewModel model)
         {
             var user = await _mediator.Send(model);
 
             return user;
         }
 
-        //[HttpPost]
-        //public IUser AddUser([FromBody]UserViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var newUser = UsersCoreService.AddElement(model);
+        [HttpPost]
+        public async Task<IUser> CreateUser([FromBody]CreateUserViewModel model)
+        {
+            var user = await _mediator.Send(model);
 
-        //        return newUser;
-        //    }
-
-        //    throw new System.Exception("Inalid model");
-        //}
-
-        //[HttpDelete]
-        //public async Task<long[]> Remove([FromBody]MultipleIdsModel model)
-        //{
-        //    await UsersCoreService.RemoveAsync(model.Ids);
-
-        //    return model.Ids;
-        //}
+            return user;
+        }
     }
 }
